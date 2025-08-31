@@ -116,12 +116,13 @@ if uploaded_files:
         base64_data = base64.b64encode(bytes_data).decode("utf-8")
 
         prompt = (
-            "Analyze this document image and return a JSON object with no additional text or markdown formatting. "
+            "Analyze this document image, extract key entities, dates, relevant metadata, and return a JSON object with no additional text or markdown formatting. "
+            "If the image is an inanimate object like a car, or a lamp, a bicycle, etc. but has no description, then it is likely a marketplace_listing_screenshot. If it has text like model name, price, marketplace website address etc. then it is likely a marketplace_listing_screenshot."
             "The JSON object must contain three keys: 'category', 'extracted_content', and 'description'.\n"
             "1. 'category': Classify the document into one of the following: 'invoice', 'marketplace_listing_screenshot', 'chat_screenshot', 'website_screenshot', or 'other'.\n"
             "2. 'extracted_content': Extract key entities such as names, dates, total amounts, item descriptions, or addresses. Structure this as a dictionary.\n"
-            "3. 'description': Write a brief, one-sentence summary of the document's purpose."
-        )
+            "3. 'description': Write a brief, one-sentence summary of the document's purpose." \
+                    )
 
         with st.spinner("Analyzing document..."):
             processed_data = call_vlm_api(base64_data, prompt, mime_type)
@@ -131,3 +132,16 @@ if uploaded_files:
             else:
                 st.success("Successfully processed!")
                 st.json(processed_data)
+                
+                # --- NEW CODE: Add Download Button ---
+                try:
+                    json_string = json.dumps(processed_data, indent=2)
+                    st.download_button(
+                        label="Download JSON Output",
+                        data=json_string,
+                        file_name=f"{uploaded_file.name}_output.json",
+                        mime="application/json",
+                    )
+                except Exception as e:
+                    st.error(f"Failed to create download button: {e}")
+                # --- END OF NEW CODE ---
