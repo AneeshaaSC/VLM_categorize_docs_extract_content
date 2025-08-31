@@ -26,12 +26,12 @@ def call_vlm_api(file_data, prompt, mime_type):
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
-        "HTTP-Referer": "http://localhost:8501", # Can be your app's URL
-        "X-Title": "VLM Document Processor"       # Can be your app's name
+        "HTTP-Referer": "http://localhost:8501", 
+        "X-Title": "VLM Document Processor"     
     }
 
     payload = {
-        "model": "google/gemini-2.5-flash-image-preview",  # Corrected model ID
+        "model": "google/gemini-2.5-flash-image-preview", 
         "messages": [
             {
                 "role": "user",
@@ -65,7 +65,7 @@ def call_vlm_api(file_data, prompt, mime_type):
             return {"error": "No valid response from VLM."}
             
     except requests.exceptions.RequestException as e:
-        # Improved error logging to show the actual response from the server
+
         error_detail = "No additional error detail."
         if e.response is not None:
             try:
@@ -90,7 +90,7 @@ if uploaded_files:
         bytes_data = uploaded_file.getvalue()
         mime_type = uploaded_file.type
 
-        # --- KEY CHANGE: Handle PDF to Image Conversion ---
+        # --- Handle PDF to Image Conversion ---
         if mime_type == "application/pdf":
             st.info("PDF detected. Converting first page to an image...")
             try:
@@ -133,7 +133,6 @@ if uploaded_files:
                 st.success("Successfully processed!")
                 st.json(processed_data)
                 
-                # --- NEW CODE: Add Download Button ---
                 try:
                     json_string = json.dumps(processed_data, indent=2)
                     st.download_button(
@@ -144,4 +143,3 @@ if uploaded_files:
                     )
                 except Exception as e:
                     st.error(f"Failed to create download button: {e}")
-                # --- END OF NEW CODE ---
