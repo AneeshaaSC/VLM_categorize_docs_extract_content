@@ -1,4 +1,6 @@
 VLM Document Processor
+
+
 This is a Streamlit application that processes documents (PDFs, PNGs, JPEGs) using a Vision Language Model (VLM) via the OpenRouter API. The application is designed to automatically categorize documents and extract key information from them.
 
 Features
