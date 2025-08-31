@@ -61,7 +61,7 @@ export OPENROUTER_API_KEY="your_openrouter_api_key_here"
 
 6. Run the Streamlit Application:
 ```
-streamlit run vlm_document_processor.py
+streamlit run app.py
 ```
 
 The application will open in your browser, and you can begin uploading documents for processing.
