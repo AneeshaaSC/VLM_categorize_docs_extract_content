@@ -31,7 +31,7 @@ Steps
 1. Clone the Repository:
 ```
 git clone https://github.com/AneeshaaSC/VLM_categorize_docs_extract_content.git
-cd <your-repository-directory>
+cd VLM_categorize_docs_extract_content
 ```
 
 2. Install Poppler (for macOS users):
